@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import UnoCSS from 'unocss/vite'
-
+import presetWebFonts from '@unocss/preset-web-fonts'
+import presetUno from '@unocss/preset-uno'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -8,7 +9,18 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [
     vue(),
-    UnoCSS()
+    UnoCSS({
+      presets: [
+        presetUno(),
+        presetWebFonts({
+          provider: 'google', // default provider
+          fonts: {
+            // these will extend the default theme
+            roboto: 'Roboto',
+          },
+        })
+      ]
+    })
   ],
   resolve: {
     alias: {
