@@ -1,7 +1,7 @@
 import { defineConfig } from 'unocss'
 
 export default defineConfig({
-    rules: [
+    rules: [['postit-box-shadow-bg-2', { 'box-shadow': '0px 4px 4px 0px #C8C8C8;' }]
     ],
 
     //自訂義綜合class
@@ -12,6 +12,7 @@ export default defineConfig({
         'remerk': 'font-size-24px text-bg-3 font-roboto font-400',
         'placeholder': 'font-size-16px text-bg-3 font-roboto font-400',
         'status': 'font-size-24px text-bg-2 font-roboto font-italic',
+        'add': 'font-size-24px text-bg-2 font-roboto',
     },
 
     //自訂主題
