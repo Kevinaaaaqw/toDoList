@@ -25,6 +25,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@vuepic/vue-datepicker": "^8.5.1",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "unocss": "^0.59.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
