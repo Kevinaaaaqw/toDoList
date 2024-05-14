@@ -22,7 +22,7 @@ const toPage = (path: string) => {
 <template>
     <div class="w-full bg-base h-80px flex justify-center">
         <div
-            class="max-w-1000px w-full flex justify-around h-full children:flex children:relative children:items-center children:h-full children:ps-5 children:pe-5 children:title hover:children:cursor-pointer ">
+            class="max-w-620px  w-full flex justify-between h-full children:flex children:relative children:items-center children:h-full children:title hover:children:cursor-pointer ">
             <div :class="checkPath(path, '/MyTasks')" @click="() => { toPage('/MyTasks') }">My Tasks</div>
             <div :class="checkPath(path, '/InProgress')" @click="() => { toPage('/InProgress') }">In Progress </div>
             <div :class="checkPath(path, '/Completed')" @click="() => { toPage('/Completed') }">Completed</div>

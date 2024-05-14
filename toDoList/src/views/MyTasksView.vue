@@ -91,7 +91,7 @@ window.addEventListener("mouseup", dragend)
       </div>
 
     </div>
-    <div class="status ms-3%">{{ tasksLength }}</div>
+    <div class="status ms-3% w-full">{{ tasksLength }}</div>
   </div>
 </template>
 

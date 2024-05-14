@@ -25,9 +25,6 @@ const hiddenCSS = (it: postIt) => {
 <template>
     <div>
         <div class="mt-2 mb-2">
-            <AddPostIt />
-        </div>
-        <div class="mt-2 mb-2">
             <draggable v-model="toDoList" @change="() => {
                 toDoItems.sortTodolist();
             }">
@@ -37,6 +34,6 @@ const hiddenCSS = (it: postIt) => {
                 </template>
             </draggable>
         </div>
-        <div class="status ms-3%">{{ tasksLength }}</div>
+        <div class="status ms-3% w-full">{{ tasksLength }}</div>
     </div>
 </template>
