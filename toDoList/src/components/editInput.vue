@@ -35,7 +35,7 @@ const isImportantCSS = computed(() => {
 
 const divH = computed(() => {
     if ((model.value?.deadLineDate || model.value?.file.file || model.value?.comment) && !model.value?.isEdit) return 'h-105px'
-    return 'h-75px'
+    return 'h-76px'
 })
 
 //時間
@@ -54,8 +54,8 @@ const time = computed(() => {
 </script>
 <template>
     <div :class="`${isImportantCSS} ${divH} relative post-hr flex flex-wrap w-full`">
-        <div :class="`w-full h-75px relative flex items-center justify-between children:m-e-3% children:m-s-3%`">
-            <div class="flex h-75px  items-center">
+        <div :class="`w-full h-76px relative flex items-center justify-between children:m-e-3% children:m-s-3%`">
+            <div class="flex h-76px  items-center">
                 <ChexkBox v-if="model" v-model="model.isDone" size="md" @change="() => emit('sendStatus')" />
                 <input v-if="model && !props.isTitle" type="text" v-model="model.title"
                     :class="`${isDoneCSS} border-none h-28px focus:outline-none w-150px md:w-400px bg-bg-1/0 title cursor-pointer hover:bg-bg-6 placeholder:title`"
@@ -98,7 +98,7 @@ const time = computed(() => {
     display: block;
     position: absolute;
     width: 100%;
-    top: 100%;
+    top: 101%;
     box-sizing: content-box;
     border: solid var(--bg-2);
     border-width: 3px 0 0 0;

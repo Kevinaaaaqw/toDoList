@@ -37,8 +37,8 @@ const save = () => {
 
 const divCSS = computed(() => {
     if (editData.value.isEdit) return 'md:w-620px h520px duration-500 bg-bg-1 rd-1 outline-none'
-    if (editData.value.deadLineDate || editData.value.file.file || editData.value.comment) return 'w-310px md:w-620px h-102px duration-500 bg-bg-1 border-solid border-bg-2 border-2px box-border rd-1 add cursor-pointer'
-    return 'w-310px md:w-620px h-76px duration-500 bg-bg-1 border-solid border-bg-2 border-2px box-border rd-1 add cursor-pointer'
+    if (editData.value.deadLineDate || editData.value.file.file || editData.value.comment) return 'w-310px md:w-620px h-102px duration-500 bg-bg-1 box-border rd-1 add cursor-pointer'
+    return 'w-310px md:w-620px h-76px duration-500 bg-bg-1 box-border rd-1 add cursor-pointer'
 })
 
 
@@ -46,10 +46,18 @@ const divCSS = computed(() => {
 
 </script>
 <template>
-    <div tabindex="0" :class="`${divCSS} relative w-310px  overflow-hidden`">
+    <div tabindex="0" :class="`${divCSS} relative w-310px overflow-hidden editPostIt-show`">
+        <div class="absolute left-1.1 top-50% translate-y--50% z-1 hidden editPostIt-show">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </div>
         <!-- Edit Form -->
         <EditInput v-model="editData" :isTitle="!editData?.isEdit" @sendStatus="sendStatus" />
         <DetailDiv v-model="editData" />
-        <PostItButton v-if="editData.isEdit" :onCancle="() => cancle()" :onSave="() => save()" />
+        <PostItButton v-if="editData.isEdit" :onCancle="() => cancle()" :onSave="() => save()" :status="'edit'" />
     </div>
 </template>
+<style>
+.editPostIt-show:hover .editPostIt-show {
+    display: block;
+}
+</style>

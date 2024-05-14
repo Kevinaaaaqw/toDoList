@@ -31,31 +31,34 @@ const save = () => {
     }
 }
 
-
-
 const divCSS = computed(() => {
     if (!addData.value.isEdit) return 'w-310px md:w-620px h-65px duration-500 bg-bg-4 border-solid border-bg-2 border-2px box-border rd-1 flex items-center add children:pe-2 cursor-pointer'
     return 'w-310px md:w-620px h520px duration-500 relative bg-bg-1 overflow-hidden rd-1 outline-none'
 })
 
-
-
-
 </script>
 <template>
-    <div tabindex="0" @focus="() => focus()" :class="divCSS">
-        <!-- add Input -->
-        <div @click="() => focus()" v-show="!addData?.isEdit" class="w-100% h-full flex items-center">
-            <img class="w-20px h-20px ms-3%" :src="Plus" />
-            <span>Add Task</span>
-        </div>
+    <div class="addShadow">
+        <div tabindex="0" @focus="() => focus()" :class="divCSS">
+            <!-- add Input -->
+            <div @click="() => focus()" v-show="!addData?.isEdit" class="w-100% h-full flex items-center">
+                <img class="w-20px h-20px ms-3%" :src="Plus" />
+                <span>Add Task</span>
+            </div>
 
-        <!-- add Form -->
-        <div v-show="addData?.isEdit">
-            <EditInput v-model="addData" :isTitle="!addData?.isEdit" @sendStatus="sendStatus" />
-            <DetailDiv v-model="addData" />
-            <PostItButton :onCancle="() => cancle()" :onSave="() => save()" />
-        </div>
+            <!-- add Form -->
+            <div v-show="addData?.isEdit">
+                <EditInput v-model="addData" :isTitle="!addData?.isEdit" @sendStatus="sendStatus" />
+                <DetailDiv v-model="addData" />
+                <PostItButton :onCancle="() => cancle()" :onSave="() => save()" :status="'add'" />
+            </div>
 
+        </div>
     </div>
 </template>
+<style>
+.addShadow {
+    box-shadow: 0px 4px 4px var(--bg-2);
+    ;
+}
+</style>

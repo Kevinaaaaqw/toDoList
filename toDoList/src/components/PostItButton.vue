@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const props = defineProps<{ status?: 'edit' | 'add' }>()
 const emit = defineEmits(['save', 'cancle'])
 </script>
 <template>
@@ -9,7 +10,8 @@ const emit = defineEmits(['save', 'cancle'])
         </div>
         <div @click="() => emit('save')" class="w-50% bg-base title text-bg-4 flex items-center justify-center">
             <i class="fa-solid fa-plus fa-sm me-3"></i>
-            <span>Add Task</span>
+            <span v-if="props.status === 'add'">Add Task</span>
+            <span v-if="props.status === 'edit'">Save</span>
         </div>
     </div>
 </template>

@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { type postIt } from '@/components/types/type'
 
@@ -16,7 +16,6 @@ export const toDoListStore = defineStore('toDoList', () => {
     }
 
     const sortTodolist = () => {
-        // console.log(toDoList.value)
         const array = [...toDoList.value]
         array.sort((a: postIt, b: postIt) => {
             if (a.isImportant && !b.isImportant) {
@@ -33,9 +32,7 @@ export const toDoListStore = defineStore('toDoList', () => {
             }
             return 0;
         })
-        console.log(array)
         toDoList.value = array
-        // console.log(toDoList.value)
     }
 
     const reset = () => {
@@ -48,5 +45,22 @@ export const toDoListStore = defineStore('toDoList', () => {
         })
     }
 
-    return { toDoList, addTodolist, sortTodolist, editDataList, reset, closeAll }
+    const dragItem = ref<postIt>()
+
+    const dragIndex = ref<string>()
+
+    const setDragIndex = (index: string) => {
+        dragIndex.value = index
+    }
+
+    const changeItems = (index: string) => {
+        if (dragIndex.value && isNaN(parseInt(dragIndex.value))) return 0
+        const num = parseInt(dragIndex.value as string)
+        dragItem.value = toDoList.value[parseInt(index)]
+        toDoList.value[parseInt(index)] = toDoList.value[num]
+        toDoList.value[num] = dragItem.value
+        sortTodolist()
+    }
+
+    return { toDoList, addTodolist, sortTodolist, editDataList, reset, closeAll, setDragIndex, changeItems }
 }, { persist: { storage: localStorage } })
