@@ -4,7 +4,7 @@ import EditPostIt from '@/components/EditPostIt.vue'
 import { toDoListStore } from '@/stores/toDoListStore'
 import { storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
-import type { postIt } from './types/type'
+import { type postIt } from '@/components/types/type'
 import draggable from 'vuedraggable'; //引入
 
 const { toDoList } = storeToRefs(toDoListStore())
