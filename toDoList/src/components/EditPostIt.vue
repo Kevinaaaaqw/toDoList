@@ -47,7 +47,7 @@ const divCSS = computed(() => {
 </script>
 <template>
     <div tabindex="0" :class="`${divCSS} relative w-310px overflow-hidden editPostIt-show`">
-        <div class="absolute left-1.1 top-50% translate-y--50% z-1 hidden editPostIt-show">
+        <div class="absolute left-1.1 top-50% translate-y--50% z-1 hidden editPostIt-show font-size-24px placeholder">
             <i class="fa-solid fa-ellipsis-vertical"></i>
         </div>
         <!-- Edit Form -->
