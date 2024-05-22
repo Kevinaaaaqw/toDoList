@@ -10,6 +10,9 @@ const { toDoList } = storeToRefs(toDoListStore())
 
 const tasksLength = computed(() => {
     return `${toDoList.value.filter((i) => {
+        if (props.taskCountType === 'taskCompleted') {
+            return i.isDone
+        }
         return !i.isDone
     }).length} ${lang.value[props.taskCountType]}`
 })

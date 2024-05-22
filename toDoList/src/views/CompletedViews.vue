@@ -3,6 +3,7 @@ import EditPostIt from '@/components/EditPostIt.vue'
 import { toDoListStore } from '@/stores/toDoListStore'
 import { storeToRefs } from 'pinia';
 import TaskLength from '@/components/TaskLength.vue'
+import LanguageSelect from '@/components/LanguageSelect.vue'
 import { type postIt } from '@/components/types/type'
 import draggable from 'vuedraggable'; //引入
 
@@ -28,8 +29,9 @@ const hiddenCSS = (it: postIt) => {
                 </template>
             </draggable>
         </div>
-        <div>
+        <div class="flex justify-between">
             <TaskLength task-count-type="taskCompleted" />
+            <LanguageSelect />
         </div>
     </div>
 </template>
