@@ -2,6 +2,9 @@
 import { computed, ref } from 'vue';
 import type { postIt } from './types/type';
 import { timeStore } from '@/stores/timeStore'
+import { storeToRefs } from 'pinia'
+import { languageStore } from '@/stores/languageStore'
+const { lang } = storeToRefs(languageStore())
 const { uploadedTime } = timeStore()
 
 const model = defineModel<postIt>()
@@ -14,9 +17,6 @@ const fileTime = computed(() => {
 })
 
 //檔案上傳
-//檔案上傳(暫時無解)
-//檔案上傳(暫時無解)
-//檔案上傳(暫時無解)
 const changeFile = (data: any) => {
     if (data.target.files[0].size > 200000) { model.value && (model.value.file = { file: null, name: data.target.files[0].name, date: new Date() }) }
     model.value && (model.value.file = { file: data.target.files[0], name: data.target.files[0].name, date: new Date() })
@@ -29,7 +29,7 @@ const changeFile = (data: any) => {
             <div class="h90px">
                 <div class="flex children:m-2 items-center">
                     <i class="fa-solid fa-calendar-days" style="color: #000000;"></i>
-                    <div class="subtitle">DeadLine</div>
+                    <div class="subtitle">{{ lang.deadLine }}</div>
                 </div>
                 <div class="subtitle ms-38px flex">
                     <div class="w-162px">
@@ -46,7 +46,7 @@ const changeFile = (data: any) => {
             <div class="h90px">
                 <div class="flex children:m-2 items-center">
                     <i class="fa-regular fa-file" style="color: #000000;"></i>
-                    <div class="subtitle">File</div>
+                    <div class="subtitle">{{ lang.file }}</div>
                 </div>
                 <div class="subtitle ms-38px flex items-center">
                     <div class="me-2">
@@ -63,7 +63,7 @@ const changeFile = (data: any) => {
             <div>
                 <div class="flex children:m-2 items-center">
                     <i class="fa-regular fa-comment-dots" style="color: #000000;"></i>
-                    <div class="subtitle">Comment</div>
+                    <div class="subtitle">{{ lang.comment }}</div>
                 </div>
                 <div class="subtitle ms-38px flex items-center">
                     <textarea @dblclick="textAreaStatus = false" @blur="textAreaStatus = true"

@@ -5,9 +5,11 @@ import ChexkBox from '@/components/CheckBox.vue'
 import solidPen from '@/components/icons/solid-pen.vue'
 import solidPenEdit from '@/components/icons/solid-pen-edit.vue'
 import { type editInput, type postIt } from '@/components/types/type'
-
+import { storeToRefs } from 'pinia'
+import { languageStore } from '@/stores/languageStore'
 import { computed } from 'vue'
 
+const { lang } = storeToRefs(languageStore())
 const props = defineProps<editInput>()
 const model = defineModel<postIt>()
 const emit = defineEmits(['sendStatus'])
@@ -59,7 +61,7 @@ const time = computed(() => {
                 <ChexkBox v-if="model" v-model="model.isDone" size="md" @change="() => emit('sendStatus')" />
                 <input v-if="model && !props.isTitle" type="text" v-model="model.title"
                     :class="`${isDoneCSS} border-none h-28px focus:outline-none w-150px md:w-400px bg-bg-1/0 title cursor-pointer hover:bg-bg-6 placeholder:title`"
-                    placeholder="Type Something Here…" />
+                    :placeholder="lang.typeSomethingHere" />
 
                 <div v-else>
                     <div

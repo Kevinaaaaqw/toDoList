@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { ref, computed, unref, type Ref } from 'vue'
-
+import { computed, unref, type Ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { languageStore } from '@/stores/languageStore'
+const { lang } = storeToRefs(languageStore())
 
 const route = useRoute()//路由
 const path = computed(() => route.path)//網址
@@ -23,9 +25,11 @@ const toPage = (path: string) => {
     <div class="w-full bg-base h-80px flex justify-center">
         <div
             class="max-w-620px  w-full flex justify-between h-full children:flex children:relative children:items-center children:h-full children:title hover:children:cursor-pointer ">
-            <div :class="checkPath(path, '/MyTasks')" @click="() => { toPage('/MyTasks') }">My Tasks</div>
-            <div :class="checkPath(path, '/InProgress')" @click="() => { toPage('/InProgress') }">In Progress </div>
-            <div :class="checkPath(path, '/Completed')" @click="() => { toPage('/Completed') }">Completed</div>
+            <div :class="checkPath(path, '/MyTasks')" @click="() => { toPage('/MyTasks') }">{{ lang.myTask }}</div>
+            <div :class="checkPath(path, '/InProgress')" @click="() => { toPage('/InProgress') }">{{ lang.inProgress }}
+            </div>
+            <div :class="checkPath(path, '/Completed')" @click="() => { toPage('/Completed') }">{{ lang.completed }}
+            </div>
         </div>
     </div>
 </template>

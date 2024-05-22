@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import AddPostIt from '@/components/AddPostIt.vue'
 import EditPostIt from '@/components/EditPostIt.vue'
 import { toDoListStore } from '@/stores/toDoListStore'
 import { storeToRefs } from 'pinia';
-import { computed, ref, watch } from 'vue';
+import TaskLength from '@/components/TaskLength.vue'
 import { type postIt } from '@/components/types/type'
 import draggable from 'vuedraggable'; //引入
 
@@ -11,11 +10,6 @@ const { toDoList } = storeToRefs(toDoListStore())
 const toDoItems = toDoListStore()
 toDoItems.closeAll()
 
-const tasksLength = computed(() => {
-    return `${toDoList.value.filter((i) => {
-        return i.isDone
-    }).length} tasks completed`
-})
 
 const hiddenCSS = (it: postIt) => {
     if (!it.isDone) return 'hidden'
@@ -34,6 +28,8 @@ const hiddenCSS = (it: postIt) => {
                 </template>
             </draggable>
         </div>
-        <div class="status ms-3% w-full">{{ tasksLength }}</div>
+        <div>
+            <TaskLength task-count-type="taskCompleted" />
+        </div>
     </div>
 </template>

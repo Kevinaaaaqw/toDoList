@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import AddPostIt from '@/components/AddPostIt.vue'
 import EditPostIt from '@/components/EditPostIt.vue'
+import LanguageSelect from '@/components/LanguageSelect.vue'
+import TaskLength from '@/components/TaskLength.vue'
 import { toDoListStore } from '@/stores/toDoListStore'
 import { storeToRefs } from 'pinia';
-import { computed, ref, watch } from 'vue';
+import { ref } from 'vue';
 
 const { toDoList } = storeToRefs(toDoListStore())
 const toDoItems = toDoListStore()
 toDoItems.closeAll()
-const tasksLength = computed(() => {
-  return `${toDoList.value.filter((i) => {
-    return !i.isDone
-  }).length} tasks left`
-})
 
 
 const target = ref()
@@ -77,6 +74,7 @@ const changeItems = (e: Event, index: number) => {
 
 
 window.addEventListener("mouseup", dragend)
+
 </script>
 <template>
   <div>
@@ -91,7 +89,10 @@ window.addEventListener("mouseup", dragend)
       </div>
 
     </div>
-    <div class="status ms-3% w-full">{{ tasksLength }}</div>
+    <div class="flex justify-between">
+      <TaskLength task-count-type="taskLeft" />
+      <LanguageSelect />
+    </div>
   </div>
 </template>
 

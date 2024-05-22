@@ -4,9 +4,11 @@ import DetailDiv from '@/components/DetailDiv.vue'
 import PostItButton from '@/components/PostItButton.vue'
 import { addPostItStore } from '@/stores/addPostItStore'
 import { toDoListStore } from '@/stores/toDoListStore'
+import { languageStore } from '@/stores/languageStore'
 import Plus from '@/components/icons/plus-solid.svg'
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia'
+const { lang } = storeToRefs(languageStore())
 
 const { addData } = storeToRefs(addPostItStore())
 const emit = defineEmits(['focus', 'save', 'cancle'])
@@ -43,7 +45,7 @@ const divCSS = computed(() => {
             <!-- add Input -->
             <div @click="() => focus()" v-show="!addData?.isEdit" class="w-100% h-full flex items-center">
                 <img class="w-20px h-20px ms-3%" :src="Plus" />
-                <span>Add Task</span>
+                <span>{{ lang.addTask }}</span>
             </div>
 
             <!-- add Form -->
