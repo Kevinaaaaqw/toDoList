@@ -35,18 +35,33 @@ const save = () => {
     editData.value = { ...props.data }
 }
 
-const divCSS = computed(() => {
-    if (editData.value.isEdit) return 'md:w-620px h520px duration-500 bg-bg-1 rd-1 outline-none'
-    if (editData.value.deadLineDate || editData.value.file.file || editData.value.comment) return 'w-310px md:w-620px h-102px duration-500 bg-bg-1 box-border rd-1 add cursor-pointer'
-    return 'w-310px md:w-620px h-76px duration-500 bg-bg-1 box-border rd-1 add cursor-pointer'
-})
+const duration500 = ref()
+
+const divCSS = ref()
+
+watch(() => [props, editData.value.isEdit], () => {
+    console.log(editData.value.isEdit)
+    duration500.value = 'duration-500'
+    setTimeout(() => { duration500.value = '' }, 500)
+    if (editData.value.isEdit) {
+        divCSS.value = `h520px outline-none`
+        return 0
+    }
+    if (editData.value.deadLineDate || editData.value.file.file || editData.value.comment) {
+        divCSS.value = `w-310px h-102px box-border add cursor-pointer`
+        return 0
+    }
+    divCSS.value = `w-310px h-76px box-border add cursor-pointer`
+
+}, { immediate: true })
 
 
 
 
 </script>
 <template>
-    <div tabindex="0" :class="`${divCSS} relative w-310px overflow-hidden editPostIt-show`">
+    <div tabindex="0"
+        :class="`${divCSS} ${duration500} md:w-620px relative w-310px overflow-hidden editPostIt-show bg-bg-1 rd-1`">
         <div class="absolute left-1.1 top-50% translate-y--50% z-1 hidden editPostIt-show font-size-24px placeholder">
             <i class="fa-solid fa-ellipsis-vertical"></i>
         </div>

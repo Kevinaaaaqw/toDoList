@@ -77,7 +77,7 @@ window.addEventListener("mouseup", dragend)
 
 </script>
 <template>
-  <div>
+  <div class="min-w-620px">
     <div class="mt-2 mb-2">
       <AddPostIt />
     </div>

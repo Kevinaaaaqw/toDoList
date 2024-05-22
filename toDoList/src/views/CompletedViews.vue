@@ -18,7 +18,7 @@ const hiddenCSS = (it: postIt) => {
 
 </script>
 <template>
-    <div>
+    <div class="min-w-620px">
         <div class="mt-2 mb-2">
             <draggable v-model="toDoList" @change="() => {
                 toDoItems.sortTodolist();
