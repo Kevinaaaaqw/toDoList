@@ -52,7 +52,7 @@ const divCSS = computed(() => {
             <div v-show="addData?.isEdit">
                 <EditInput v-model="addData" :isTitle="!addData?.isEdit" @sendStatus="sendStatus" />
                 <DetailDiv v-model="addData" />
-                <PostItButton :onCancle="() => cancle()" :onSave="() => save()" :status="'add'" />
+                <PostItButton :onCancle="() => cancle()" :onSave="() => save()" :status="'add'" :absolute="true" />
             </div>
 
         </div>

@@ -3,11 +3,12 @@ import AddPostIt from '@/components/AddPostIt.vue'
 import EditPostIt from '@/components/EditPostIt.vue'
 import LanguageSelect from '@/components/LanguageSelect.vue'
 import TaskLength from '@/components/TaskLength.vue'
+import type { postIt } from '@/components/types/type'
 import { toDoListStore } from '@/stores/toDoListStore'
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
-const { toDoList } = storeToRefs(toDoListStore())
+const { toDoList, deleteWindowStatus } = storeToRefs(toDoListStore())
 const toDoItems = toDoListStore()
 toDoItems.closeAll()
 
@@ -21,18 +22,20 @@ const x = ref(0)
 const y = ref(0)
 const startChange = ref(false)
 
-const dragStart = (event: any, index: number) => {
+const dragStart = (event: any, index: number, data: postIt) => {
   event.preventDefault()
-  toDoItems.setDragIndex(index.toString())
-  startChange.value = true
-  target.value = document.getElementById(`${index}EDit`)
-  target.value.style.zIndex = 1
-  target.value.classList.add('tasksShadow')
-  mouseXPos.value = event.clientX
-  mouseYPos.value = event.clientY
-  pageX.value = event.pageX
-  pageY.value = event.pageY
-  document.addEventListener("mousemove", dragover)
+  if (!deleteWindowStatus.value) {
+    toDoItems.setDragIndex(index.toString())
+    startChange.value = true
+    target.value = document.getElementById(`${index}EDit`)
+    target.value.style.zIndex = 1
+    target.value.classList.add('tasksShadow')
+    mouseXPos.value = event.clientX
+    mouseYPos.value = event.clientY
+    pageX.value = event.pageX
+    pageY.value = event.pageY
+    document.addEventListener("mousemove", dragover)
+  }
 }
 
 const dragover = (event: any) => {
@@ -51,9 +54,9 @@ const dragover = (event: any) => {
 
 }
 
-const dragend = () => {
+const dragend = (event: Event, data?: postIt) => {
   document.removeEventListener("mousemove", dragover)
-  if (target.value) {
+  if (target.value && !deleteWindowStatus.value) {
     target.value.classList.remove("tasksShadow")
     target.value.style.left = '0px'
     target.value.style.top = '0px'
@@ -72,8 +75,13 @@ const changeItems = (e: Event, index: number) => {
 
 }
 
+onMounted(() => {
+  window.addEventListener("mouseup", dragend)
+})
 
-window.addEventListener("mouseup", dragend)
+onUnmounted(() => {
+  window.removeEventListener("mouseup", dragend)
+})
 
 </script>
 <template>
@@ -83,7 +91,7 @@ window.addEventListener("mouseup", dragend)
     </div>
     <div class="mt-2 mb-2">
       <div v-for=" (it, index) in toDoList" :key="index" :id="`${index}EDit`" draggable="true"
-        @dragstart="(d) => { dragStart(d, index) }" @dragend="() => { dragend() }"
+        @dragstart="(d) => { dragStart(d, index, it) }" @dragend="(d) => { dragend(d, it) }"
         @mouseenter="(e) => { changeItems(e, index) }" class="pt-5px pb-5px relative">
         <EditPostIt class="relative tasksShadow" :data="it" :index="index" />
       </div>

@@ -3,10 +3,10 @@ import EditInput from '@/components/editInput.vue'
 import DetailDiv from '@/components/DetailDiv.vue'
 import PostItButton from '@/components/PostItButton.vue'
 import { toDoListStore } from '@/stores/toDoListStore'
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import type { postIt } from './types/type'
 
-const { editDataList } = toDoListStore()
+const { editDataList, deleteDataList } = toDoListStore()
 const props = defineProps<{ data: postIt, index: number }>()
 const editData = ref<postIt>({
     ...props.data
@@ -39,24 +39,24 @@ const duration500 = ref()
 
 const divCSS = ref()
 
-watch(() => [props, editData.value.isEdit], () => {
-    console.log(editData.value.isEdit)
-    duration500.value = 'duration-500'
-    setTimeout(() => { duration500.value = '' }, 500)
+watch(() => [editData.value.isEdit], (a, b) => {
+    if (a && b && a[0] != b[0]) {
+        duration500.value = 'duration-500'
+        setTimeout(() => {
+            duration500.value = ''
+        }, 500)
+    }
     if (editData.value.isEdit) {
         divCSS.value = `h520px outline-none`
         return 0
     }
     if (editData.value.deadLineDate || editData.value.file.file || editData.value.comment) {
-        divCSS.value = `w-310px h-102px box-border add cursor-pointer`
+        divCSS.value = `w-310px h-102px box-border add`
         return 0
     }
-    divCSS.value = `w-310px h-76px box-border add cursor-pointer`
+    divCSS.value = `w-310px h-76px box-border add`
 
 }, { immediate: true })
-
-
-
 
 </script>
 <template>
@@ -66,9 +66,11 @@ watch(() => [props, editData.value.isEdit], () => {
             <i class="fa-solid fa-ellipsis-vertical"></i>
         </div>
         <!-- Edit Form -->
-        <EditInput v-model="editData" :isTitle="!editData?.isEdit" @sendStatus="sendStatus" />
+        <EditInput v-model="editData" :isTitle="!editData?.isEdit" @sendStatus="sendStatus"
+            @do-delete="() => { deleteDataList(props.data) }" />
         <DetailDiv v-model="editData" />
-        <PostItButton v-if="editData.isEdit" :onCancle="() => cancle()" :onSave="() => save()" :status="'edit'" />
+        <PostItButton v-if="editData.isEdit" :onCancle="() => cancle()" :onSave="() => save()" :status="'edit'"
+            :absolute="true" />
     </div>
 </template>
 <style>
