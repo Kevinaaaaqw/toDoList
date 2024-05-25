@@ -4,17 +4,27 @@ import { type postIt } from '@/components/types/type'
 
 
 export const toDoListStore = defineStore('toDoList', () => {
-    const toDoList = ref<postIt[]>([])
+    const toDoList = ref<postIt[]>([]) //任務清單
 
+    //加入任務
     const addTodolist = (mask: postIt) => {
         toDoList.value.push(mask)
         sortTodolist()
     }
 
+    //編輯任務
     const editDataList = (data: object, index: number) => {
         toDoList.value[index] = { ...toDoList.value[index], ...data }
     }
 
+    const deleteWindowStatus = ref(false) //是否進入刪除確認狀態
+
+    //刪除任務
+    const deleteDataList = (data: postIt) => {
+        toDoList.value = toDoList.value.filter((item) => item !== data)
+    }
+
+    //任務排序
     const sortTodolist = () => {
         const array = [...toDoList.value]
         array.sort((a: postIt, b: postIt) => {
@@ -35,15 +45,23 @@ export const toDoListStore = defineStore('toDoList', () => {
         toDoList.value = array
     }
 
+    //清空任務(用不太到)
     const reset = () => {
         toDoList.value = []
     }
 
+
+    //所有任務收合
     const closeAll = () => {
         toDoList.value = toDoList.value.map((i) => {
             return { ...i, isEdit: false }
         })
     }
+
+
+    //
+    //任務順序交換
+    //
 
     const dragItem = ref<postIt>()
 
@@ -62,5 +80,8 @@ export const toDoListStore = defineStore('toDoList', () => {
         sortTodolist()
     }
 
-    return { toDoList, addTodolist, sortTodolist, editDataList, reset, closeAll, setDragIndex, changeItems }
+    //
+    //任務順序交換
+    //
+    return { toDoList, deleteWindowStatus, addTodolist, sortTodolist, editDataList, deleteDataList, reset, closeAll, setDragIndex, changeItems }
 }, { persist: { storage: localStorage } })
